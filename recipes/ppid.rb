@@ -22,17 +22,16 @@
 
 # Uncomment the following to suppress StrictHostKeyChecking for the root user
 
-# Directory "/root/.ssh" do
-#   action :create
-#   mode 0700
-# end
-# 
-# File "/root/.ssh/config" do
-#   action :create
-#   content "Host *\\nStrictHostKeyChecking no"
-#   mode 0600
-# end
+Directory "/root/.ssh" do
+  action :create
+  mode 0700
+end
 
+File "/root/.ssh/config" do
+  action :create
+  content "Host *\\nStrictHostKeyChecking no"
+  mode 0600
+end
 
 ruby_block "Give root access to the forwarded ssh agent" do
   block do
@@ -52,7 +51,7 @@ ruby_block "Give root access to the forwarded ssh agent" do
       end
     end
     # Uncomment to require that an ssh-agent be available
-    # fail "Could not find running ssh agent - Is config.ssh.forward_agent enabled in Vagrantfile?" unless ENV['SSH_AUTH_SOCK']
+    fail "Could not find running ssh agent - Is config.ssh.forward_agent enabled in Vagrantfile?" unless ENV['SSH_AUTH_SOCK']
   end
   action :create
 end
