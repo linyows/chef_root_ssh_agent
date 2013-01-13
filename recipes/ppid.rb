@@ -29,7 +29,7 @@ end
 
 File "/root/.ssh/config" do
   action :create
-  content "Host *\\nStrictHostKeyChecking no"
+  content "Host *\nStrictHostKeyChecking no"
   mode 0600
 end
 
