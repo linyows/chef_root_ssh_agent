@@ -33,6 +33,22 @@ File "/root/.ssh/config" do
   mode 0600
 end
 
+data_bag('users').each do |id|
+  u = data_bag_item('users', id)
+  user u['username'] do
+    Directory "#{u['home']}/.ssh" do
+      action :create
+      mode 0700
+    end
+
+    File "#{u['home']}/.ssh/config" do
+      action :create
+      content "Host *\nStrictHostKeyChecking no"
+      mode 0600
+    end
+  end
+end
+
 ruby_block "Give root access to the forwarded ssh agent" do
   block do
     # find a parent process' ssh agent socket
